@@ -1,8 +1,11 @@
 import React from 'react';
+import DocumentTitle from 'react-document-title';
+
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import DocumentTitle from 'react-document-title';
+
 import Title from '../../template/Title';
+import Loading from '../../template/Loading';
 import {AppConf} from '../../../utils/constants';
 import NpcComponent from './NpcComponent';
 /**
@@ -12,6 +15,9 @@ const params = {
     title: 'NPC',
     subtitle: 'Non-player Character',
 };
+/**
+ *  Query
+ */
 const QUERY = gql`
 {
     allNpcs {
@@ -31,10 +37,15 @@ const QUERY = gql`
         }
     }
 }`;
-const allPeoplesQueryVars = {
+const allNpcsQueryVars = {
     skip: 0,
     first: 4
 };
+/**
+ * Render
+ *
+ * @param {*} param0
+ */
 const Npc = ({data: { loading, error, allNpcs }, loadMorePosts }) => {
     return (
         <section>
@@ -42,17 +53,17 @@ const Npc = ({data: { loading, error, allNpcs }, loadMorePosts }) => {
             <Title title={params.title} subtitle={params.subtitle} />
             {
                 error ? <h1>Error fetching posts!</h1> :
-                loading ? <h1>Loading...</h1> : <NpcComponent allNpcs={allNpcs} />
+                loading ? <Loading /> : <NpcComponent allNpcs={allNpcs} />
             }
         </section>
     );
 };
 /**
- *
+ * Quering
  */
 export default graphql(QUERY, {
     options: {
-        variables: allPeoplesQueryVars
+        variables: allNpcsQueryVars
     }, props: ({ data }) => ({
         data,
         loadMorePosts: () => {

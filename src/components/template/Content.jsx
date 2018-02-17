@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import { Switch, Route } from 'react-router-dom';
+
+import DocumentTitle from 'react-document-title';
+import Title from './Title';
+import {AppConf} from '../../utils/constants';
+
 import Home from '../pages/home/index';
-import People from '../pages/people/index';
 import Npc from '../pages/npc/index';
+import Enemies from '../pages/enemies/index';
+import Bosses from '../pages/bosses/index';
+import Places from '../pages/places/index';
+import About from '../pages/about/index';
 /**
  * Main Content component
  *
@@ -12,26 +20,29 @@ import Npc from '../pages/npc/index';
 class Content extends Component {
     render(){
         return (
-            <div className="container">
-                <div className="row">
-                    <Switch className="col s12 m12 offset-m1 xl12 center-on-small-only">
-                        <Route exact path='/' title="Home" component={Home}/>
-                        <Route path='/people' component={People}/>
-                        <Route path='/npc' component={Npc}/>
-                        <Route component={NoMatch} />
-                    </Switch>
-                </div>
+            <div className="row">
+                <Switch className="col s12 m12 l12 xl12 center-on-small-only">
+                    <Route exact path='/' title="Home" component={Home}/>
+                    <Route path='/npc' component={Npc}/>
+                    <Route path='/enemies' component={Enemies}/>
+                    <Route path='/bosses' component={Bosses}/>
+                    <Route path='/places' component={Places}/>
+                    <Route path='/about' component={About}/>
+                    <Route component={NoMatch} />
+                </Switch>
             </div>
         );
     }
 }
 
 const NoMatch = ({ location }) => (
-    <div>
-        <h3>
-            404 » <code>{location.pathname}</code>
-        </h3>
-    </div>
+    <section>
+        <DocumentTitle title={AppConf.name +' » not-found'} />
+        <Title title="404" subtitle="Not found" />
+        <div className="content">
+            Sorry, the resource <code>{location.pathname}</code> was not foud.
+        </div>
+    </section>
 );
 
 export default Content;

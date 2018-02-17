@@ -13,12 +13,10 @@ class Title extends Component {
     render() {
         return (
             <div className="section grey lighten-5" id="index-banner">
-                <div className="container">
-                    <div className="row">
-                        <div className="col s12 m12 offset-m1 xl12 center-on-small-only">
-                            <h1 className="header grey-text text-darken-1">{this.props.title}</h1>
-                            <h4 className="header grey-text text-lighten-1">{this.props.subtitle}</h4>
-                        </div>
+                <div className="row">
+                    <div className="col s12 m12 l12 xl12 center-on-small-only">
+                        <h1 className="header grey-text text-darken-1">{this.props.title}</h1>
+                        <h4 className="header grey-text text-lighten-1">{this.props.subtitle}</h4>
                     </div>
                 </div>
             </div>
