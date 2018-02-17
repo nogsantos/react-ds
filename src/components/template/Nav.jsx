@@ -70,7 +70,7 @@ class Nav extends Component {
      */
     render(){
         return (
-            <section className="sidenav sidenav-fixed grey lighten-5">
+            <section id="nav-mobile" className="sidenav sidenav-fixed grey lighten-5">
                 <ul>
                     <li className="logo">
                         <div id="logo-container" className="brand-logo">

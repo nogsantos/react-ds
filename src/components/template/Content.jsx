@@ -18,19 +18,23 @@ import About from '../pages/about/index';
  * @extends {Component}
  */
 class Content extends Component {
+    /**
+     * Render
+     *
+     * @returns
+     * @memberof Content
+     */
     render(){
         return (
-            <div className="row">
-                <Switch className="col s12 m12 l12 xl12 center-on-small-only">
-                    <Route exact path='/' title="Home" component={Home}/>
-                    <Route path='/npc' component={Npc}/>
-                    <Route path='/enemies' component={Enemies}/>
-                    <Route path='/bosses' component={Bosses}/>
-                    <Route path='/places' component={Places}/>
-                    <Route path='/about' component={About}/>
-                    <Route component={NoMatch} />
-                </Switch>
-            </div>
+            <Switch className="col s12 m12 l12 xl12 center-on-small-only">
+                <Route exact path='/' title="Home" component={Home}/>
+                <Route path='/npc' component={Npc}/>
+                <Route path='/enemies' component={Enemies}/>
+                <Route path='/bosses' component={Bosses}/>
+                <Route path='/places' component={Places}/>
+                <Route path='/about' component={About}/>
+                <Route component={NoMatch} />
+            </Switch>
         );
     }
 }
