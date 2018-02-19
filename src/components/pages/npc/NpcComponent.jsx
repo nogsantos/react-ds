@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classNames from 'classnames';
+import InfiniteScroll from 'react-infinite-scroller'
 
 import AppCards from '../../template/AppCards';
 import AppCardsActions from '../../template/AppCardsActions';
@@ -23,7 +24,11 @@ class NpcComponent extends React.Component {
             togled: false,
         }
         this.actions = [
-            {onClick: this.changeDisplay, icon: 'view_list'},
+            {
+                onClick: this.changeDisplay,
+                icon: 'view_list',
+                iconTitle: 'List',
+            },
         ];
     }
     /**
@@ -36,6 +41,9 @@ class NpcComponent extends React.Component {
             view: prevState.togled ? 12 : 4,
             togled: !prevState.togled,
         }));
+    }
+    more = () => {
+
     }
     /**
      * Rendering
@@ -50,20 +58,38 @@ class NpcComponent extends React.Component {
             'm12 l12 xl12': this.state.togled,
             'm4 l4 xl4': !this.state.togled,
         });
+        this.actions[0].icon = !this.state.togled ? 'view_list' : 'view_quilt';
+        this.actions[0].iconTitle = !this.state.togled ? 'List' : 'Grid';
+
+        let items = [];
+        const loader = <div key={0} className="loader">Loading ...</div>;
+        this.props.allNpcs.map(npc => {
+            return items.push(
+                <div className={gridClass} key={npc.id}>
+                    <AppCards
+                        className={gridClass}
+                        key={npc.id}
+                        title={npc.name}
+                        picture={npc.picture ? npc.picture.url : null}
+                        coverphoto={npc.coverphoto ? npc.coverphoto.url : null}
+                        content={npc.information} />
+                </div>
+            )
+        })
+
         return (
             <section>
                 <AppCardsActions btn={this.actions}/>
-                <div className={this.state.togled ? 'container': 'row' }>
-                    {
-                        this.props.allNpcs.map(npc => {
-                            return (
-                                <div className={gridClass} key={npc.id}>
-                                    <AppCards title={npc.name} content={npc.notes}/>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={this.more}
+                        hasMore={true}
+                        loader={loader}
+                        useWindow={false}>
+                        <div className={this.state.togled ? 'container': 'row' }>
+                            {items}
+                        </div>
+                    </InfiniteScroll>
             </section>
             // <section className="content">
             //     <Collapsible popout>

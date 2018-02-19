@@ -10,6 +10,7 @@ body {
     color: $off-black;
     line-height: 1.6;
     font-size: 16px;
+    display: flow-root;  /*enables flex content for its children*/
     -webkit-font-smoothing: antialiased;
 }
 
@@ -444,6 +445,12 @@ main {
     main,
     footer {
         padding-left: 15%;
+    }
+    .fixed-nav-position{
+        position: fixed;
+        top: 0;
+        z-index: 999;
+        width: 84vw;
     }
 }
 

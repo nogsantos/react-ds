@@ -86,13 +86,13 @@ class Nav extends Component {
                         })
                     }
                 </ul>
-                <div className="sidenav-footer grey lighten-5">
+                {/* <div className="sidenav-footer grey lighten-5">
                     <div className="row">
                         <div className="col s12">
                             some info...
                         </div>
                     </div>
-                </div>
+                </div> */}
             </section>
         );
     }

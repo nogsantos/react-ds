@@ -24,16 +24,13 @@ const QUERY = gql`
         id
         name
         class
-        description
-        notes
         version
-        picture {
+        information
+        coverphoto{
             url
         }
-        places {
-            id
-            name
-            description
+        picture{
+            url
         }
     }
 }`;
