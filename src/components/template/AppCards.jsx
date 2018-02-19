@@ -21,7 +21,7 @@ class AppCards extends Component {
                             <span className="card-title">{this.props.title}</span>
                             {
                                 this.props.picture ?
-                                <a class="btn-floating halfway-fab waves-effect waves-light white"><img src={this.props.picture} alt=""/></a> :
+                                <a className="btn-floating white"><img src={this.props.picture} className="responsive-img" alt=""/></a> :
                                 null
                             }
                         </div>
