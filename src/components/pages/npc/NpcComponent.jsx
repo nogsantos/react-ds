@@ -70,6 +70,8 @@ class NpcComponent extends React.Component {
                         className={gridClass}
                         key={npc.id}
                         title={npc.name}
+                        class={npc.class}
+                        version={npc.version}
                         picture={npc.picture ? npc.picture.url : null}
                         coverphoto={npc.coverphoto ? npc.coverphoto.url : null}
                         content={npc.information} />
