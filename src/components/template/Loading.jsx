@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {ProgressBar} from 'react-materialize';
+
+import styled from 'styled-components';
+
+const Section = styled.section`
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 /**
  *
  * @class AppLoading
@@ -13,9 +22,54 @@ class AppLoading extends Component {
      */
     render() {
         return (
-            <section className="content">
-                <ProgressBar />
-            </section>
+            <Section className="content center">
+                <div className="preloader-wrapper big active">
+                    <div className="spinner-layer spinner-blue">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="gap-patch">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
+                    </div>
+                    <div className="spinner-layer spinner-red">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="gap-patch">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
+                    </div>
+                    <div className="spinner-layer spinner-yellow">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="gap-patch">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
+                    </div>
+                    <div className="spinner-layer spinner-green">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="gap-patch">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </Section>
         );
     }
 }
