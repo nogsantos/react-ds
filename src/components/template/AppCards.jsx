@@ -15,8 +15,8 @@ const Title = styled.span`
 `;
 
 const Image = styled.img`
-    opacity: 0.5;
-    filter: alpha(opacity=50);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
     &:hover {
         opacity: 1;
         filter: alpha(opacity=100);
@@ -29,7 +29,7 @@ const Thumb = styled.img`
 `;
 
 const NoImage = styled.div`
-    height: 180px;
+    height: 215px;
 `;
 
 /**
@@ -84,7 +84,7 @@ class AppCards extends Component {
         return (
             <div className="row">
                 <div className="col s12 m12 l12 xl12">
-                    <div className="card small">
+                    <div className="card large">
                         <div className="card-image">
                             {this.renderCover(this.props.coverphoto)}
                             <Title className="card-title flow-text grey-text text-darken-4">{`${this.props.title} the ${this.props.class}`}</Title>
@@ -102,7 +102,7 @@ class AppCards extends Component {
                                 <div className="col s8">
                                     <span className="black-text">
                                         {this.props.content}
-                                        <p className="right"><Link to={`link/${this.props.path}`}>See more</Link></p>
+                                        <p className="right"><Link to={this.props.path}>See more</Link></p>
                                     </span>
                                 </div>
                             </div>
