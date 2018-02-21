@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import DocumentTitle from 'react-document-title';
+import { Provider } from 'react-redux';
+import { ApolloProvider } from 'react-apollo'
 
+import { createStore } from 'redux';
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { ApolloProvider } from 'react-apollo'
 
+import reducer from './reducers';
 import './style.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -32,15 +34,24 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
-
+/**
+ * Reducers
+ */
+const store = createStore(
+    reducer, /* preloadedState, */
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+/**
+ * Render
+ */
 ReactDOM.render(
-    <DocumentTitle title="SWAPI">
+    <Provider store={store}>
         <BrowserRouter>
             <ApolloProvider client={client}>
                 <App />
             </ApolloProvider>
         </BrowserRouter>
-    </DocumentTitle>,
+    </Provider>,
     document.getElementById('root')
 );
 registerServiceWorker();

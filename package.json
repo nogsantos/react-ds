@@ -36,8 +36,10 @@
         "react-infinite-scroller": "1.1.3",
         "react-markdown": "3.2.0",
         "react-materialize": "1.1.2",
+        "react-redux": "5.0.7",
         "react-router-dom": "4.2.2",
         "react-scripts": "1.1.1",
+        "redux": "3.7.2",
         "styled-components": "3.1.6"
     },
     "devDependencies": {

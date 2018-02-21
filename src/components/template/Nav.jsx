@@ -74,7 +74,7 @@ class Nav extends Component {
                 <ul>
                     <li className="logo">
                         <div id="logo-container" className="brand-logo">
-                            <img src="./assets/img/logo.png" className="responsive-img" alt="Paise the sun" title="Paise the sun" width="150"/>
+                            <img src="/assets/img/logo.png" className="responsive-img" alt="Paise the sun" title="Paise the sun" width="150"/>
                         </div>
                     </li>
                     {/* <this.Collapsible i={1} /> */}

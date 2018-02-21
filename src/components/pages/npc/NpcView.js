@@ -40,11 +40,6 @@ query Npc($id: ID!) {
     }
 }`;
 
-// const GetId = ({ match }) => (match.params.id);
-
-const npcQueryVars = {
-    id: 'cjdq2d0m3sns801166abkklm1',
-};
 /**
  * Render
  *
@@ -61,27 +56,41 @@ const NpcView = ({data: { loading, error, Npc }, loadMorePosts }) => {
         </section>
     );
 };
+
+// const GetId = ({ match }) => (match.params.id);
+const LoadNpc = ({match}) => {
+    return (
+        graphql(QUERY, {
+            options: {
+                variables: {id: match.params.id}
+            }, props: ({ data }) => ({
+                data,
+                loadMorePosts: () => {
+                    return data.fetchMore({
+                        variables: {
+                            skip: data.Npc.length
+                        },
+                    updateQuery: (previousResult, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) {
+                            return previousResult
+                        }
+                        return Object.assign({}, previousResult, {
+                            Npc: [...previousResult.Npc, ...fetchMoreResult.Npc]
+                        })
+                    }
+                })}
+            })
+        })(NpcView)
+    );
+}
+
+export default LoadNpc;
+
+// const npcQueryVars = {
+//     id: '',
+// };
+
 /**
  * Quering
  */
-export default graphql(QUERY, {
-    options: {
-        variables: npcQueryVars
-    }, props: ({ data }) => ({
-        data,
-        loadMorePosts: () => {
-            return data.fetchMore({
-                variables: {
-                skip: data.Npc.length
-            },
-            updateQuery: (previousResult, { fetchMoreResult }) => {
-                if (!fetchMoreResult) {
-                    return previousResult
-                }
-                return Object.assign({}, previousResult, {
-                    Npc: [...previousResult.Npc, ...fetchMoreResult.Npc]
-                })
-            }
-        })}
-    })
-})(NpcView);
+
