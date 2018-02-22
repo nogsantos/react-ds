@@ -3,10 +3,10 @@ import DocumentTitle from 'react-document-title';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import InfiniteScroll from 'react-infinite-scroller'
 
 import Title from '../../template/Title';
 import Loading from '../../template/Loading';
+import BtnLoading from '../../template/buttons/BtnLoading';
 import {AppConf} from '../../../utils/constants';
 import NpcComponent from './NpcComponent';
 /**
@@ -15,6 +15,59 @@ import NpcComponent from './NpcComponent';
 const params = {
     title: 'NPC',
     subtitle: 'Non-player Character',
+};
+/**
+ * Defines the page header
+ */
+const PageHeader = () => {
+    return (
+        <section>
+            <DocumentTitle title={AppConf.name +' » '+params.title} />
+            <Title title={params.title} subtitle={params.subtitle} />
+        </section>
+    );
+}
+/**
+ * Render
+ *
+ * @param {*} param0
+ */
+const Npc = ({data: { loading, error, allNpcs, _allNpcsMeta }, loadMorePosts }) => {
+    if(error){
+        return (
+            <section>
+                <PageHeader />
+                <h1>Error fetching posts!</h1>
+            </section>
+        );
+    }
+    if(allNpcs && _allNpcsMeta){
+        const areMorePosts = allNpcs.length < _allNpcsMeta.count;
+        return (
+            <section>
+                <PageHeader />
+                {
+                    <div className="row">
+                        <NpcComponent allNpcs={allNpcs} />
+                    </div>
+                }
+                {
+                    areMorePosts ?
+                    <BtnLoading
+                        loading={loading}
+                        onClick={() => loadMorePosts()}
+                        className="btn red lighten-3" />
+                    : ''
+                }
+            </section>
+        );
+    }
+    return (
+        <section>
+            <PageHeader />
+            <Loading />
+        </section>
+    );
 };
 /**
  *  Query
@@ -27,73 +80,48 @@ query allNpcs($first: Int!, $skip: Int!) {
         class
         version
         information
-        coverphoto{
-            url
-        }
-        picture{
-            url
-        }
     },
     _allNpcsMeta {
         count
     }
 }`;
-const allNpcsQueryVars = {
-    skip: 0,
-    first: 4
-};
 /**
- * Render
- *
- * @param {*} param0
+ * Query configurations
  */
-const Npc = ({data: { loading, error, allNpcs, _allNpcsMeta }, loadMorePosts }) => {
-    const loader = <div key={0} className="loader">Loading ...</div>;
-    const areMorePosts = loading ? false : allNpcs.length < _allNpcsMeta.count;
-    return (
-        <section>
-            <DocumentTitle title={AppConf.name +' » '+params.title} />
-            <Title title={params.title} subtitle={params.subtitle} />
-            {
-                error ? <h1>Error fetching posts!</h1> :
-                loading ?
-                    <Loading /> :
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={loadMorePosts}
-                        hasMore={areMorePosts}
-                        threshold={2048}
-                        useWindow
-                        loader={loader}>
-                        <div className="row">
-                            <NpcComponent allNpcs={allNpcs} />
-                        </div>
-                </InfiniteScroll>
-            }
-        </section>
-    );
-};
-/**
- * Quering
- */
-export default graphql(QUERY, {
+const CONFIG_QUERY = {
     options: {
-        variables: allNpcsQueryVars
+        variables: {
+            skip: 0,
+            first: 4
+        },
+        notifyOnNetworkStatusChange: true
     }, props: ({ data }) => ({
         data,
         loadMorePosts: () => {
-            return data.fetchMore({
+            return data.fetchMore(
+                {
                 variables: {
-                skip: data.allNpcs.length
-            },
-            updateQuery: (previousResult, { fetchMoreResult }) => {
-                if (!fetchMoreResult) {
-                    return previousResult
-                }
-                return Object.assign({}, previousResult, {
-                    allNpcs: [...previousResult.allNpcs, ...fetchMoreResult.allNpcs]
-                })
+                    skip: data.allNpcs.length
+                },
+                updateQuery: (previousResult, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) {
+                        return previousResult
+                    }
+                    return Object.assign({}, previousResult, {
+                        allNpcs: [
+                            ...previousResult.allNpcs,
+                            ...fetchMoreResult.allNpcs
+                        ]
+                    }
+                )
             }
         })}
     })
-})(Npc);
+}
+/**
+ * Quering
+ */
+export default graphql(
+    QUERY,
+    CONFIG_QUERY,
+)(Npc);

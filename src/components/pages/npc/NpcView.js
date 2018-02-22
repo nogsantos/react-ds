@@ -28,7 +28,6 @@ const NpcView = ({
         Npc
     }
 }) => {
-    console.log({hasid})
     return (
         <section>
             <DocumentTitle title={AppConf.name +' » '+params.title} />
@@ -39,7 +38,6 @@ const NpcView = ({
         </section>
     );
 };
-// const GetId = ({ match }) => (match.params.id);
 /**
  *  Query
  */
@@ -52,10 +50,8 @@ const QUERY = gql`
             drops
             information
             notes
-            picture{
-                url
-            }
             places{
+                id
                 name
                 description
             }
@@ -66,14 +62,12 @@ const QUERY = gql`
 }`;
 /**
  * Query Conf
- * cjdvnzbxrmkss0100kx4hagca
  */
 const CONFIG_QUERY = {
         options: (props) => ({
             variables: {
-                hasid: props.match,
                 cursor: null,
-                id: 'cjdvnzbxrmkss0100kx4hagca',
+                id: props.match.params.id,
                 skip: 0,
             },
         }),
