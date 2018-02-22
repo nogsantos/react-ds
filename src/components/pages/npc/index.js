@@ -56,7 +56,7 @@ const Npc = ({data: { loading, error, allNpcs, _allNpcsMeta }, loadMorePosts }) 
                     <BtnLoading
                         loading={loading}
                         onClick={() => loadMorePosts()}
-                        className="btn red lighten-3" />
+                        className="btn green lighten-3" />
                     : ''
                 }
             </section>

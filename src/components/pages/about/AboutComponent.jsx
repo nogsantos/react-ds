@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+
+import Markdown from 'react-markdown';
+
+import readmePath from './About.md';
 /**
  * About JSX component
  *
@@ -6,6 +10,31 @@ import React, {Component} from 'react';
  * @extends {Component}
  */
 class AboutComponent extends Component {
+    /**
+     * Creates an instance of AboutComponent.
+     * @memberof AboutComponent
+     */
+    constructor(){
+        super();
+
+        this.state = {
+            markdown: '',
+        }
+    }
+    /**
+     * Loading the source
+     *
+     * @memberof AboutComponent
+     */
+    componentWillMount() {
+        fetch(readmePath).then(response => {
+            return response.text()
+          }).then(text => {
+            this.setState({
+                markdown: text
+            });
+        });
+    }
     /**
      * Rendering
      *
@@ -15,7 +44,11 @@ class AboutComponent extends Component {
     render() {
         return (
             <section className="content">
-                {this.props.content}
+                <div className="row">
+                    <div className="col s12">
+                        <Markdown source={this.state.markdown} />
+                    </div>
+                </div>
             </section>
         );
     }

@@ -40,7 +40,11 @@ class Content extends Component {
         );
     }
 }
-
+/**
+ * When the route does't match
+ *
+ * @param {*} param0
+ */
 const NoMatch = ({ location }) => (
     <section>
         <DocumentTitle title={AppConf.name +' » not-found'} />

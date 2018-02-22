@@ -4,8 +4,6 @@ import DocumentTitle from 'react-document-title';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import Title from '../../template/Title';
-import Loading from '../../template/Loading';
 import {AppConf} from '../../../utils/constants';
 import NpcViewComponent from './NpcViewComponent';
 /**
@@ -31,9 +29,8 @@ const NpcView = ({
     return (
         <section>
             <DocumentTitle title={AppConf.name +' » '+params.title} />
-            <Title title={params.title} subtitle={params.subtitle} />
             {
-                error ? <h1>Error fetching posts!</h1> : loading ? <Loading /> : <NpcViewComponent npc={Npc} />
+                error ? <h1>Error fetching posts!</h1> : <NpcViewComponent npc={Npc} loading={loading} />
             }
         </section>
     );
@@ -50,6 +47,12 @@ const QUERY = gql`
             drops
             information
             notes
+            picture{
+                url
+            }
+            coverphoto{
+                url
+            }
             places{
                 id
                 name

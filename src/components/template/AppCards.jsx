@@ -32,6 +32,11 @@ const NoImage = styled.div`
     height: 215px;
 `;
 
+const NoThumb = styled.div`
+    height: 120px;
+    width: 120px;
+`;
+
 /**
  *
  *
@@ -48,9 +53,8 @@ class AppCards extends Component {
         if(text && text.length > 0){
             let out = text.substring(0, size);
             return text.length > size ? `${out}...`: out;
-        } else {
-            return '';
         }
+        return '';
     }
     /**
      * Render cover photo
@@ -58,11 +62,7 @@ class AppCards extends Component {
      * @memberof AppCards
      */
     renderCover = img => {
-        if(img) {
-            return <Image src={img} alt='' />
-        } else {
-            return <NoImage className="grey lighten-1" />
-        }
+        return img ? <Image src={img} alt='' /> : <NoImage className="grey lighten-1" />;
     }
     /**
      * Render picture photo
@@ -70,9 +70,7 @@ class AppCards extends Component {
      * @memberof AppCards
      */
     renderPicture = img => {
-        if(img) {
-            return <Thumb src={img} alt='' className="circle responsive-img" />
-        }
+        return img ? <Thumb src={img} alt='' className="circle responsive-img" /> : <NoThumb className="circle grey lighten-1" />
     }
     /**
      *
