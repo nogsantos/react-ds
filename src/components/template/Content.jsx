@@ -7,7 +7,7 @@ import {AppConf} from '../../utils/constants';
 
 import Home from '../pages/home/index';
 import Npc from '../pages/npc/index';
-import LoadNpc from '../pages/npc/NpcView';
+import NpcView from '../pages/npc/NpcView';
 import Enemies from '../pages/enemies/index';
 import Bosses from '../pages/bosses/index';
 import Places from '../pages/places/index';
@@ -30,7 +30,7 @@ class Content extends Component {
             <Switch className="col s12 m12 l12 xl12 center-on-small-only">
                 <Route exact path='/' title="Home" component={Home}/>
                 <Route exact path='/npc' component={Npc}/>
-                <Route exact path='/npc/view/:id' component={LoadNpc}/>
+                <Route exact path='/npc/view/:id' component={NpcView}/>
                 <Route exact path='/enemies' component={Enemies}/>
                 <Route exact path='/bosses' component={Bosses}/>
                 <Route exact path='/places' component={Places}/>

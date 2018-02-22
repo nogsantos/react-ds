@@ -16,36 +16,19 @@ const params = {
     subtitle: 'Non-player Character',
 };
 /**
- *  Query
- */
-const QUERY = gql`
-query Npc($id: ID!) {
-    Npc(id: $id) {
-        name
-        class
-        description
-        drops
-        information
-        notes
-        picture{
-          url
-        }
-        places{
-          name
-          description
-        }
-        _placesMeta{
-          count
-        }
-    }
-}`;
-
-/**
  * Render
  *
  * @param {*} param0
  */
-const NpcView = ({data: { loading, error, Npc }, loadMorePosts }) => {
+const NpcView = ({
+    hasid,
+    data: {
+        loading,
+        error,
+        Npc
+    }
+}) => {
+    console.log({hasid})
     return (
         <section>
             <DocumentTitle title={AppConf.name +' » '+params.title} />
@@ -56,41 +39,49 @@ const NpcView = ({data: { loading, error, Npc }, loadMorePosts }) => {
         </section>
     );
 };
-
 // const GetId = ({ match }) => (match.params.id);
-const LoadNpc = ({match}) => {
-    return (
-        graphql(QUERY, {
-            options: {
-                variables: {id: match.params.id}
-            }, props: ({ data }) => ({
-                data,
-                loadMorePosts: () => {
-                    return data.fetchMore({
-                        variables: {
-                            skip: data.Npc.length
-                        },
-                    updateQuery: (previousResult, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) {
-                            return previousResult
-                        }
-                        return Object.assign({}, previousResult, {
-                            Npc: [...previousResult.Npc, ...fetchMoreResult.Npc]
-                        })
-                    }
-                })}
-            })
-        })(NpcView)
-    );
-}
-
-export default LoadNpc;
-
-// const npcQueryVars = {
-//     id: '',
-// };
-
 /**
- * Quering
+ *  Query
  */
-
+const QUERY = gql`
+    query Npc($id: ID!) {
+        Npc(id: $id) {
+            name
+            class
+            description
+            drops
+            information
+            notes
+            picture{
+                url
+            }
+            places{
+                name
+                description
+            }
+            _placesMeta{
+                count
+            }
+        }
+}`;
+/**
+ * Query Conf
+ * cjdvnzbxrmkss0100kx4hagca
+ */
+const CONFIG_QUERY = {
+        options: (props) => ({
+            variables: {
+                hasid: props.match,
+                cursor: null,
+                id: 'cjdvnzbxrmkss0100kx4hagca',
+                skip: 0,
+            },
+        }),
+    };
+/**
+ * Apollo export
+ */
+export default graphql(
+    QUERY,
+    CONFIG_QUERY
+)(NpcView);

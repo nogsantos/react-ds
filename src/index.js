@@ -6,9 +6,10 @@ import { ApolloProvider } from 'react-apollo'
 
 import { createStore } from 'redux';
 import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import { setContext } from 'apollo-link-context';
+import { ApolloLink } from 'apollo-link';
+import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { onError } from 'apollo-link-error';
 
 import reducer from './reducers';
 import './style.css';
@@ -18,22 +19,42 @@ import {AppConf} from './utils/constants';
 /**
  * Apollo conf
  */
-const httpLink = createHttpLink({
+
+ const httpLink = new HttpLink({
     uri: AppConf.apiEndPoint,
-});
-const authLink = setContext((_, { headers }) => {
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTg4MDA1NDAsImNsaWVudElkIjoiY2l2Z29zNmNqMDE5MjAxODRucDAxZGRkMiIsInByb2plY3RJZCI6ImNqZHB5aHllczE3czMwMTkzNTNlbTZ4NzMiLCJwZXJtYW5lbnRBdXRoVG9rZW5JZCI6ImNqZHE2bWxtaDMyc2owMTYzN3lhMzM5cXcifQ.OjIFxPg-wb3O54AO8UY7t1Aw7HTCD5SKyfg7RF1vIqw"
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : "",
-      }
+    headers: {
+        authorization: `Bearer ${process.env.REACT_APP_DS_TOKEN}`,
     }
 });
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors){
+        graphQLErrors.map(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+    }
+    if (networkError) {
+        console.log(`[Network error]: ${networkError}`);
+    }
 });
+
+const link = ApolloLink.from([
+    errorLink,
+    httpLink,
+]);
+
+const cache = new InMemoryCache({
+    logger: console.log,
+    loggerEnabled: true,
+});
+
+const client = new ApolloClient({
+    link,
+    cache,
+});
+
 /**
  * Reducers
  */
