@@ -15,51 +15,56 @@ class NpcViewComponent extends Component {
      * Creates an instance of NpcViewComponent.
      * @memberof NpcViewComponent
      */
-    constructor(){
-        super();
-
+    constructor(props) {
+        super(props);
         this.state = {
-            title: '',
-            subtitle: '',
+            title: 'Loading...',
+            subtitle: 'Loading...',
         }
     }
-
-    componentDidMount(){
-        this.setState((state, props) => ({
-            title: this.props.npc.name,
-            subtitle: this.props.npc.class,
-        }))
+    /**
+     *
+     *
+     * @memberof NpcViewComponent
+     */
+    componentWillReceiveProps(){
+        this.setState((prevState, props) => {
+            return {
+                title: props.npc.name,
+                subtitle: props.npc.class,
+            };
+        });
     }
-
+    /**
+     *
+     *
+     * @memberof NpcViewComponent
+     */
     DataRender = ({props}) => {
-        console.log(props);
         return (
             <div className="row">
-                    <div className="col s12">
-                        <p>{props.npc.name}</p>
-                        <p>{props.npc.class}</p>
-                        <p>{props.npc.drops}</p>
-                        <p>{props.npc.information}</p>
-                        <p>{props.npc.notes}</p>
-                        <p>
-                            {
-                                props.npc.places.map(place => {
-                                    return (
-                                        <section key={place.id}>
-                                            <p>{place.name}</p>
-                                            <p>
-                                                <Markdown source={place.description} />
-                                            </p>
-                                        </section>
-                                    );
-                                })
-                            }
-                        </p>
+                <div className="col s12">
+                    <p>{props.npc.name}</p>
+                    <p>{props.npc.class}</p>
+                    <p>{props.npc.drops}</p>
+                    <p>{props.npc.information}</p>
+                    <p>{props.npc.notes}</p>
+                    <div className="row">
+                        {
+                            props.npc.places.map(place => {
+                                return (
+                                    <section key={place.id}>
+                                        <p>{place.name}</p>
+                                        <Markdown source={place.description} />
+                                    </section>
+                                );
+                            })
+                        }
                     </div>
                 </div>
+            </div>
         );
     }
-
     /**
      *
      *

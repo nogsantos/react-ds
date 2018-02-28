@@ -41,9 +41,6 @@ class NpcComponent extends React.Component {
             togled: !prevState.togled,
         }));
     }
-    more = () => {
-
-    }
     /**
      * Rendering
      *
