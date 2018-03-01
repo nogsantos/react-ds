@@ -47,13 +47,10 @@ const QUERY = gql`
             drops
             information
             notes
-            picture{
+            picture {
                 url
             }
-            coverphoto{
-                url
-            }
-            places{
+            places {
                 id
                 name
                 description

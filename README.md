@@ -1,6 +1,9 @@
 # Dark Souls with react
 
+[v0.3.0](https://vigorous-elion-389ea7.netlify.com/)
+
 [v0.2.0](https://frosty-fermi-978c37.netlify.com/)
+
 [v0.1.0](https://pensive-pasteur-e424a4.netlify.com/)
 
 ## Setup
